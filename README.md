@@ -39,8 +39,7 @@ function renderAsText(pixels, canvas, font, text, width, height, dx, dy) {
 }
 
 function imageToText(image, canvas, font, text, dx, dy) {
-    renderAsText(getPixels(image), canvas, font, text,
-    		 image.width, image.height, dx, dy);
+    renderAsText(getPixels(image), canvas, font, text, image.width, image.height, dx, dy);
 }
 ```
 
