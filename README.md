@@ -33,8 +33,7 @@ function renderAsText(pixels, canvas, font, text, width, height, dx, dy) {
 
     for (var i = 0, x = 0, y = 0; i < pixels.length; x += dx) {
      	if (x >= w) {y += dy; x = 0;}
-	ctx.fillStyle = ["rgba(", pixels[i++], ",", pixels[i++], ",",
-		         pixels[i++], ",", pixels[i++], ")"].join('');
+        ctx.fillStyle = ["rgba(", pixels[i++], ",", pixels[i++], ",", pixels[i++], ",", pixels[i++], ")"].join('');
      	ctx.fillText(text, x, y);
      }
 }
