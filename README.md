@@ -1,6 +1,6 @@
 # knoxcarey.com
 
-This is a repo for my personal homepage. I'll describe some of the
+This is a repo for my [personal homepage](https://knoxcarey.com). I'll describe some of the
 techniques I used to make the site below.
 
 ## Banner image
