@@ -31,6 +31,8 @@
 #   1. This program assumes the use of GNU AWK (gawk)
 #   2. Case does not matter, either in the colon-separated key/value
 #      pairs, or in the double-curly-braced keywords in templates
+#   3. This templating engine does not attach any semantic value to
+#      keyword tags -- that's left to downstream tools.
 ############################################################################
 
 
