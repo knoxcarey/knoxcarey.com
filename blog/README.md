@@ -7,6 +7,8 @@ HTML pages. Presumably the host would check for commits periodically,
 or listen on a particular port for a notice that changes were
 made. This would trigger an update and rebuild.
 
+## Structure
+
 Right now, the structure is:
 
 * code/
@@ -27,4 +29,8 @@ Right now, the structure is:
 
 * themes/current/ a symbolic link to the current theme being used
 
-  
+## Todo
+
+1. Blog-level keyword substitution; e.g. blog title
+2. Dynamic keywords, e.g. post date
+3. Start building index pages
