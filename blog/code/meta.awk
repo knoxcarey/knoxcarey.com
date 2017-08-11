@@ -38,6 +38,9 @@
 #      should be recognized as the starts and ends of a keyword in the
 #      template files. The default separator is ":", and the keywords
 #      in templates are surrounded by ""{{" and "}}" by default.
+#   5. Set the variable DELETE_UNKNOWN to 1 to have the engine
+#      eliminate unknown tags from the template files; i.e. keywords
+#      for which no values have been defined.
 ############################################################################
 
 
@@ -47,19 +50,21 @@ function trim(s) { gsub(/(^\s+|\s+$)/, "", s); return s }
 
 # Set up global variables
 BEGIN {
-  # Constants that impact key/value parsing and substitution
-  SEPARATOR=":"
-  SUB_OPEN="{{"
-  SUB_CLOSE="}}"
-    
+  # User-defined constants
+  SEPARATOR = ":"               # Key/value separator in metadata file               
+  OPEN = "{{"                   # Characters that open a substitution tag
+  CLOSE = "}}"                  # Characters that close a substitution tag
+  TAG = OPEN ".+" CLOSE         # Regex matching any tag
+  DELETE_UNKNOWN = 1            # Whether or not to delete unknown tags
+  
   # Special AWK variables
-  FS=SEPARATOR
-  IGNORECASE=1
+  FS = SEPARATOR                # Split metadata lines on user-defined char
+  IGNORECASE = 1                # Make tag matching case-insensitive
 }
 
 # Extract key/value metadata from first file
 NR == FNR && /^\w+\s*:\s*.+$/ {
-  meta[SUB_OPEN trim($1) SUB_CLOSE] = trim($2)
+  meta[OPEN trim($1) CLOSE] = trim($2)
 }
 
 # Stop processing metadata on whitespace-only line
@@ -68,11 +73,8 @@ NR == FNR && /^\s*$/ {
 }
 
 # Make substitutions in subsequent files
-NR != FNR && /{{\w+}}/ {
-  for (key in meta) gsub(key, meta[key])
-}
-
-# Print all lines in template files
 NR != FNR {
+  for (key in meta) gsub(key, meta[key])
+  if (DELETE_UNKNOWN) gsub(TAG, "")
   print
 }
