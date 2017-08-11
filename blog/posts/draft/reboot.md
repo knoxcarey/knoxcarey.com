@@ -1,6 +1,6 @@
-title:	Reboot
-tags: 	blog
-author: knox
+Title:	Reboot
+Tags: 	blog
+Author: knox
 
 Today marks the official reboot of my personal blog, which has been on
 the Internet sporadically since about 2002. I'm trying something
