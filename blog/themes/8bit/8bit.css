@@ -1,0 +1,81 @@
+body {
+    background-color: black;
+    color: green;
+    font-family: "Courier";
+    font-weight: bold;
+}
+
+#left {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 200px;
+}
+
+#right {
+    float: right;
+    width: 75%;
+}
+
+#header {
+    text-align: center;
+    margin-bottom: 2em;
+    overflow: auto;
+}
+
+#title {
+    padding: 1em 0;
+    font-size: 42pt;
+}
+
+.post {
+    width: 70%;
+    margin-bottom: 8vh;
+}
+
+.post-header {
+}
+
+.post-title {
+    font-size: xx-large;
+    text-align: left;
+    margin-bottom: 0.5em;
+}
+
+.post-meta {
+    font-size: large;
+    clear: both;
+}
+
+.post-meta:after {
+    content: ".";
+    visibility: hidden;
+    display: block;
+    height: 0;
+    clear: both;
+}
+
+.post-date {
+    font-size: large;
+    margin-bottom: 0.5em;
+    float: left;
+}
+
+.post-tags {
+    float: center;
+    text-align: center;
+}
+
+.post-text {
+    text-align: left;
+    line-height: 1.1;
+}
+
+.quote {
+    text-align: center;
+}
+
+a {
+    color: inherit;
+}
