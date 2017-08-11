@@ -1,4 +1,4 @@
-# This makefile assumes GNU make
+# Note: This makefile assumes GNU make
 
 # External programs to user
 mmd = /usr/local/bin/multimarkdown
