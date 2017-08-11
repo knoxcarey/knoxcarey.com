@@ -70,6 +70,9 @@ NR == FNR && /^\s*$/ {
 # Make substitutions in subsequent files
 NR != FNR && /{{\w+}}/ {
   for (key in meta) gsub(key, meta[key])
-  print
 }
 
+# Print all lines in template files
+NR != FNR {
+  print
+}
