@@ -33,6 +33,11 @@
 #      pairs, or in the double-curly-braced keywords in templates
 #   3. This templating engine does not attach any semantic value to
 #      keyword tags -- that's left to downstream tools.
+#   4. You can adjust the character that separates key/value pairs in
+#      the BEGIN clause, below. You can also change the strings that
+#      should be recognized as the starts and ends of a keyword in the
+#      template files. The default separator is ":", and the keywords
+#      in templates are surrounded by ""{{" and "}}" by default.
 ############################################################################
 
 
@@ -42,13 +47,19 @@ function trim(s) { gsub(/(^\s+|\s+$)/, "", s); return s }
 
 # Separate lines on colons; ignore case in matches
 BEGIN {
-  FS=":"
+  # Constants that impact key/value parsing and substitution
+  KV_SEPARATOR=":"
+  SUB_OPEN="{{"
+  SUB_CLOSE="}}"
+    
+  # Special AWK variables
+  FS=KV_SEPARATOR
   IGNORECASE=1
 }
 
 # Extract key/value metadata from first file
 NR == FNR && /^\w+\s*:\s*.+$/ {
-  meta["{{" trim($1) "}}"] = trim($2)
+  meta[SUB_OPEN trim($1) SUB_CLOSE] = trim($2)
 }
 
 # Stop processing metadata on whitespace-only line
