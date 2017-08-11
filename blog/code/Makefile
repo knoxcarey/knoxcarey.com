@@ -1,7 +1,8 @@
 # This makefile assumes GNU make
 
-# Multimarkdown tool
+# External programs to user
 mmd = /usr/local/bin/multimarkdown
+awk = /usr/local/bin/gawk
 
 # Current theme
 theme = ../themes/current
@@ -13,12 +14,7 @@ posts_per_index_page = 5
 %.body.html: %.md
 	$(mmd) -s $< > $@
 
-# Extract metadata from multimarkdown post
-# %.meta: %.md
-# 	@tags = $(shell $(mmd) -m $<)
-# 	echo $(tags)
-
 # Build a standalone post page from a snippet
-%.post.html: $(theme)/post_header.html %.body.html $(theme)/post_footer.html
-	cat $^ > $@
+%.post.html: %.md $(theme)/post_header.html %.body.html $(theme)/post_footer.html
+	$(awk) -f meta.awk $^ > $@
 
