@@ -45,15 +45,15 @@
 function trim(s) { gsub(/(^\s+|\s+$)/, "", s); return s }
 
 
-# Separate lines on colons; ignore case in matches
+# Set up global variables
 BEGIN {
   # Constants that impact key/value parsing and substitution
-  KV_SEPARATOR=":"
+  SEPARATOR=":"
   SUB_OPEN="{{"
   SUB_CLOSE="}}"
     
   # Special AWK variables
-  FS=KV_SEPARATOR
+  FS=SEPARATOR
   IGNORECASE=1
 }
 
