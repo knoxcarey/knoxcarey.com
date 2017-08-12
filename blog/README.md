@@ -31,6 +31,5 @@ Right now, the structure is:
 
 ## Todo
 
-1. Blog-level keyword substitution; e.g. blog title
-2. Dynamic keywords, e.g. post date
-3. Start building index pages
+1. Dynamic keywords, e.g. post date
+2. Start building index pages

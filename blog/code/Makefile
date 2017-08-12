@@ -7,6 +7,9 @@ awk = /usr/local/bin/gawk
 # Current theme
 theme = ../themes/current
 
+# Blog configuration
+config = ../config/blog
+
 # Number of posts to be included on each index page
 posts_per_index_page = 5
 
@@ -15,6 +18,6 @@ posts_per_index_page = 5
 	$(mmd) -s $< > $@
 
 # Build a standalone post page from a snippet
-%.post.html: %.md $(theme)/post_header.html %.body.html $(theme)/post_footer.html
+%.post.html: $(config) %.md $(theme)/post_header.html %.body.html $(theme)/post_footer.html
 	$(awk) -f meta.awk $^ > $@
 

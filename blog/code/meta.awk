@@ -3,16 +3,16 @@
 # and substitutes those values into template documents. It's basically a
 # lightweight template engine.
 #
-# The first file given as an argument should contain colon-delimited
+# The first two files given as an argument should contain colon-delimited
 # key/value pairs on successive lines, starting on the first line --
-# the file cannot contain any whitespace lines at the top. An example
+# the files cannot contain any whitespace lines at the top. An example
 # of the file format:
 #
 # Title: My Awesome Post
 # Tags: foo, bar, baz
 # Author: knox
 #
-# ... text of post ...
+# ... text of blog post ...
 #
 # In the template files, use double curly braces to indicate where a
 # value should be substituted. So, for example, using the metadata
@@ -25,7 +25,12 @@
 # The title of the post is "My Awesome Post" and the author is knox
 #
 # Invoke the command line this:
-#   gawk -f meta.awk post.md template.html
+#   gawk -f meta.awk config post.md template.html
+#
+# Where meta.awk is this file, config is a blog-wide set of key-value
+# pairs, post.md is a blog post with key/value metadata at the top,
+# and template.html is the template file with metadata tags to be
+# filled in. 
 #
 # Notes:
 #   1. This program assumes the use of GNU AWK (gawk)
@@ -63,17 +68,17 @@ BEGIN {
 }
 
 # Extract key/value metadata from first file
-NR == FNR && /^\w+\s*:\s*.+$/ {
+ARGIND <= 2 && /^\w+\s*:\s*.+$/ {
   meta[OPEN trim($1) CLOSE] = trim($2)
 }
 
 # Stop processing metadata on whitespace-only line
-NR == FNR && /^\s*$/ {
+ARGIND <= 2 && /^\s*$/ {
   nextfile
 }
 
 # Make substitutions in subsequent files
-NR != FNR {
+ARGIND > 2 {
   for (key in meta) gsub(key, meta[key])
   if (DELETE_UNKNOWN) gsub(TAG, "")
   print
