@@ -65,6 +65,9 @@ BEGIN {
   # Special AWK variables
   FS = SEPARATOR                # Split metadata lines on user-defined char
   IGNORECASE = 1                # Make tag matching case-insensitive
+
+  # Special metadata
+  meta[OPEN "updated" CLOSE] = strftime("%e %B %Y")
 }
 
 # Extract key/value metadata from first file
