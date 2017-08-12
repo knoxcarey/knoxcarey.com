@@ -66,16 +66,16 @@ BEGIN {
   FS = SEPARATOR                # Split metadata lines on user-defined char
   IGNORECASE = 1                # Make tag matching case-insensitive
 
-  # Special metadata
+  # Automatic metadata
   meta[OPEN "updated" CLOSE] = strftime("%e %B %Y")
 }
 
-# Extract key/value metadata from first file
+# Extract key/value metadata from first two files
 ARGIND <= 2 && /^\w+\s*:\s*.+$/ {
   meta[OPEN trim($1) CLOSE] = trim($2)
 }
 
-# Stop processing metadata on whitespace-only line
+# Stop processing metadata on whitespace-only lines
 ARGIND <= 2 && /^\s*$/ {
   nextfile
 }
