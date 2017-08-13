@@ -56,7 +56,8 @@ function trim(s) { gsub(/(^\s+|\s+$)/, "", s); return s }
 # Set up global variables
 BEGIN {
   # User-defined constants
-  SEPARATOR = ":"               # Key/value separator in metadata file               
+  SEPARATOR = ":[^//]"          # Key/value separator in metadata file.
+                                # Default: a colon, not followed by //
   OPEN = "{{"                   # Characters that open a substitution tag
   CLOSE = "}}"                  # Characters that close a substitution tag
   TAG = OPEN ".+" CLOSE         # Regex matching any tag
@@ -65,24 +66,24 @@ BEGIN {
   # Special AWK variables
   FS = SEPARATOR                # Split metadata lines on user-defined char
   IGNORECASE = 1                # Make tag matching case-insensitive
-
+  
   # Automatic metadata
   meta[OPEN "updated" CLOSE] = strftime("%e %B %Y")
 }
 
-# Extract key/value metadata from first two files
-ARGIND <= 2 && /^\w+\s*:\s*.+$/ {
-  meta[OPEN trim($1) CLOSE] = trim($2)
-}
-
-# Stop processing metadata on whitespace-only lines
-ARGIND <= 2 && /^\s*$/ {
-  nextfile
+# Extract key/value metadata from first two files, stopping on whitespace
+ARGIND <= 2 {
+  switch ($0) {
+    case /^\s*$/:           nextfile; break;
+    case /^\w+\s*:\s*.+$/:  meta[OPEN trim($1) CLOSE] = trim($2)
+  }
 }
 
 # Make substitutions in subsequent files
 ARGIND > 2 {
-  for (key in meta) gsub(key, meta[key])
-  if (DELETE_UNKNOWN) gsub(TAG, "")
+  if ($0 ~ TAG) {
+    for (key in meta) gsub(key, meta[key])
+    if (DELETE_UNKNOWN) gsub(TAG, "")
+  }
   print
 }
