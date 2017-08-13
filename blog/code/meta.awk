@@ -56,8 +56,8 @@ function trim(s) { gsub(/(^\s+|\s+$)/, "", s); return s }
 # Set up global variables
 BEGIN {
   # User-defined constants
-  SEPARATOR = ":[^//]"          # Key/value separator in metadata file.
-                                # Default: a colon, not followed by //
+  SEPARATOR = ":[ \t]+"         # Key/value separator in metadata file.
+                                # Default: a colon followed by some space
   OPEN = "{{"                   # Characters that open a substitution tag
   CLOSE = "}}"                  # Characters that close a substitution tag
   TAG = OPEN ".+" CLOSE         # Regex matching any tag
