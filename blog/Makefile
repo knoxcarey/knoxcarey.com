@@ -27,13 +27,16 @@ code = code
 %.post.html: $(config) $(posts)/%.md $(theme)/post_header.html %.body.html $(theme)/post_footer.html
 	$(awk) -f $(code)/meta.awk $^ > $@
 
+prefix = "published_"
+
 # Create a standalone page = header + post + footer
 %.ppheader.html: $(config) $(posts)/%.md $(theme)/postpage_header.html
 	$(awk) -f $(code)/meta.awk $^ > $@
 %.ppfooter.html: $(config) $(posts)/%.md $(theme)/postpage_footer.html
 	$(awk) -f $(code)/meta.awk $^ > $@
 %.html: %.ppheader.html %.post.html %.ppfooter.html
-	cat $^ > $@
+	@mkdir -p $(pub)
+	cat $^ > $(pub)/$@
 
 
 
