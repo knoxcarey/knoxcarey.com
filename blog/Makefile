@@ -7,6 +7,10 @@ awk = /usr/local/bin/gawk
 # Publication directory
 pub = publish/axiomatic
 
+# Posts to publish
+posts = $(wildcard posts/publish/*.md)
+pages = $(patsubst posts/publish/%.md, %.html, $(posts))
+
 # Convert multimarkdown files to bare HTML snippets
 %.body.html: posts/%.md
 	$(mmd) -s --nosmart $< > $@
@@ -17,7 +21,7 @@ pub = publish/axiomatic
 	mkdir -p $(pubdir)
 	echo $(pubdir) > $@
 
-# Make build directory
+# Make staging directory for storing built products
 staging:
 	mkdir -p staging
 
@@ -32,10 +36,6 @@ staging/posts/%.post.html: config/blog posts/%.md themes/current/post_header.htm
 	$(awk) -f code/meta.awk $^ > $@
 %.ppfooter.html: config/blog posts/%.md themes/current/postpage_footer.html
 	$(awk) -f code/meta.awk $^ > $@
-
-# staging/pages/%.html: %.ppheader.html staging/posts/%.post.html %.ppfooter.html | %.ts
-# 	cat $^ > $(shell cat $|)/$(@F)
-
 .PRECIOUS: staging/pages/%.html
 staging/pages/%.html: %.ppheader.html staging/posts/%.post.html %.ppfooter.html
 	cat $^ > $@
@@ -44,33 +44,21 @@ staging/pages/%.html: %.ppheader.html staging/posts/%.post.html %.ppfooter.html
 %.html: staging/pages/%.html publish | %.ts
 	ln -s ../../../../../$< $(shell cat $|)/$@
 
-
 # Publish blog
-.PHONY: publish
-publish:
+publish: $(pages)
 	mkdir -p $(pub)
 	ln -s ../../themes/current $(pub)/theme
 	ln -s ../../media $(pub)/media
 
-
-
-
+# Clean up all the things
 .PHONY: clean
 clean:
 	rm -f staging/*/*
 	rm -rf publish
 
 
-
 # ######## NOTES #########
 # * How to do index files now, with linking?
 # * RSS feed
-# * Routing: want post URLs to look like /blog/YYYY/MM/DD/title.html
-#   for individual posts; /blog/index.html, index2.html, etc for
-#   indicies. How then to find things like theme files, media, etc.?
-# * For posts, symlink to a 'published' subdirectory to cause
-#   publication. Similar to how ubuntu handles web site config.
-#   Timestamp should be computed from time of 'publication' ie. time
-#   that symlink was created. Fortunately, this is what 'stat' does.
-# 
+# * Automatic date? 
 
