@@ -1,41 +1,11 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="robots" content="index,follow" />
-    <title>{{BLOGNAME}} | {{TITLE}}</title>
-    <link rel="stylesheet" href="/blog/themes/current/styles.css">
-    <script async type="text/javascript">
-      function getPixels(t){var e=document.createElement("canvas"),n=e.getContext("2d");return e.width=t.width,e.height=t.height,n.drawImage(t,0,0),n.getImageData(0,0,t.width,t.height).data}function renderAsText(t,e,n,i,r,a,h,g){var c=e.getContext("2d");c.font=n;var d=e.width=r*h;e.height=a*g;for(var o=0,f=0,l=0;o<t.length;f+=h)f>=d&&(l+=g,f=0),c.fillStyle=["rgba(",t[o++],",",t[o++],",",t[o++],",",t[o++],")"].join(""),c.fillText(i,f,l)}function imageToText(t,e,n,i,r,a){renderAsText(getPixels(t),e,n,i,t.width,t.height,r,a)}
-    </script>
-  </head>
-  <body>
-    <div id="left">
-      <canvas>
-	<h1>Knox Carey</h1>
-	  <img onload="imageToText(this,this.parentElement,'4pt Courier','\u2022',3,3);" src="data:image/png;base64,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"/>
-	</canvas>
-      </div>
-      
-    <div id="right">
-      <div id="header">
-	<div id="title">
-	  <a href="{{BLOGURL}}">{{BLOGNAME}}</a>
-	</div>
-      </div>
-      
-      <div class="post">
-	<div class="post-header">
-	  <div class="post-title">
-	    {{TITLE}}
-	  </div>
-	  <div class="post-meta">
-	    <div class="post-date">
-	      {{DATE}}
-	    </div>
-	    <div class="post-tags">
-	      {{TAGS}}
-	    </div>
-	  </div>
-	</div>
-	<div class="post-text">
+<div class="post">
+  <div class="post-header">
+    <div class="post-title">
+      {{TITLE}}
+    </div>
+    <div class="post-meta">
+      <span class="post-date">{{DATE}}&nbsp;|&nbsp;</span>
+      <span class="post-tags">{{TAGS}}</span>
+    </div>
+  </div>
+  <div class="post-text">
