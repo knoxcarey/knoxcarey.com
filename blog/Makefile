@@ -20,7 +20,7 @@ pubdir:
 	mkdir -p $(pub)
 
 # Convert multimarkdown files to bare HTML snippets
-%.body.html: posts/%.md
+%.body.html: posts/published/%.md
 	$(mmd) -s --nosmart $< > $@
 
 # Build the post HTML by applying theme, interpolating variables, etc.
@@ -32,9 +32,9 @@ staging/posts/%.post.html: posts/published/%.md config/blog themes/current/post_
 	$(awk) -f code/meta.awk -v 'date=$(pubdate)' -v 'permalink=$(perma)' $^ > $@
 
 # Create a standalone page
-%.header.html: config/blog posts/%.md themes/current/postpage_header.html
+%.header.html: config/blog posts/published/%.md themes/current/postpage_header.html
 	$(awk) -f code/meta.awk $^ > $@
-%.footer.html: config/blog posts/%.md themes/current/postpage_footer.html
+%.footer.html: config/blog posts/published/%.md themes/current/postpage_footer.html
 	$(awk) -f code/meta.awk $^ > $@
 .PRECIOUS: staging/pages/%.html
 staging/pages/%.html: %.header.html staging/posts/%.post.html %.footer.html | staging
