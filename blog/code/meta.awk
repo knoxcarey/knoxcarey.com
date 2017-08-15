@@ -52,7 +52,9 @@ function trim(s) { gsub(/(^\s+|\s+$)/, "", s); return s }
 BEGIN {
   FS = ":[ \t]+"                              # Metadata split pattern
   IGNORECASE = 1                              # Match case-insensitive
-  kv["{{updated}}"] = strftime("%e %B %Y")    # Update timestamp 
+  kv["{{updated}}"] = strftime("%e %B %Y")    # Update timestamp
+  kv["{{date}}"] = date                       # Date passed in on cmd line
+  kv["{{permalink}}"] = permalink             # Permalink passed in
 }
 
 # Extract metadata from first two files; stop at first whitespace-only line

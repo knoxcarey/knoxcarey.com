@@ -32,6 +32,13 @@ body {
 
 #title a {
     text-decoration: none;
+    color: green;
+    background-color: black;
+}
+
+#title a:hover {
+    color: black;
+    background-color: green;
 }
 
 .post {
@@ -46,6 +53,17 @@ body {
     font-size: xx-large;
     text-align: left;
     margin-bottom: 0.5em;
+}
+
+.post-title a {
+    text-decoration: none;
+    color: black;
+    background-color: green;
+}
+
+.post-title a:hover {
+    color: green;
+    background-color: black;
 }
 
 .post-meta {
@@ -80,6 +98,8 @@ body {
     text-align: center;
 }
 
+
 a {
-    color: inherit;
+    color: green;
 }
+

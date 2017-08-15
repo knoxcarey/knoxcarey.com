@@ -11,44 +11,43 @@ pub = publish/axiomatic
 posts = $(wildcard posts/publish/*.md)
 pages = $(patsubst posts/publish/%.md, %.html, $(posts))
 
-# Convert multimarkdown files to bare HTML snippets
-%.body.html: posts/%.md
-	$(mmd) -s --nosmart $< > $@
-
-# Modification date timestamp
-%.ts: posts/%.md
-	$(eval pubdir = $(shell stat -t "$(pub)/%Y/%m/%d" -f "%Sm" $<))
-	mkdir -p $(pubdir)
-	echo $(pubdir) > $@
-
 # Make staging directory for storing built products
 staging:
 	mkdir -p staging
 
+# Make publication directory
+pubdir:
+	mkdir -p $(pub)
+
+# Convert multimarkdown files to bare HTML snippets
+%.body.html: posts/%.md
+	$(mmd) -s --nosmart $< > $@
+
 # Build the post HTML by applying theme, interpolating variables, etc.
 .PRECIOUS: staging/posts/%.post.html
-staging/posts/%.post.html: config/blog posts/%.md themes/current/post_header.html \
+staging/posts/%.post.html: posts/publish/%.md config/blog themes/current/post_header.html \
 			   %.body.html themes/current/post_footer.html | staging
-	$(awk) -f code/meta.awk $^ > $@
+	$(eval pubdate = $(shell stat -t "%e %B %Y" -f "%Sc" $<))
+	$(eval perma = $(patsubst %.post.html, %.html, $(@F)))
+	$(awk) -f code/meta.awk -v 'date=$(pubdate)' -v 'permalink=$(perma)' $^ > $@
 
-# Create a standalone page = header + post + footer
-%.ppheader.html: config/blog posts/%.md themes/current/postpage_header.html
+# Create a standalone page
+%.header.html: config/blog posts/%.md themes/current/postpage_header.html
 	$(awk) -f code/meta.awk $^ > $@
-%.ppfooter.html: config/blog posts/%.md themes/current/postpage_footer.html
+%.footer.html: config/blog posts/%.md themes/current/postpage_footer.html
 	$(awk) -f code/meta.awk $^ > $@
 .PRECIOUS: staging/pages/%.html
-staging/pages/%.html: %.ppheader.html staging/posts/%.post.html %.ppfooter.html
+staging/pages/%.html: %.header.html staging/posts/%.post.html %.footer.html | staging
 	cat $^ > $@
 
 # Rule to publish staged files
-%.html: staging/pages/%.html publish | %.ts
-	ln -s ../../../../../$< $(shell cat $|)/$@
+%.html: staging/pages/%.html | pubdir
+	ln -f -s ../../$< $(pub)/$@
 
 # Publish blog
-publish: $(pages)
-	mkdir -p $(pub)
-	ln -s ../../themes/current $(pub)/theme
-	ln -s ../../media $(pub)/media
+publish: $(pages) | pubdir
+	ln -f -s ../../themes/current $(pub)/theme
+	ln -f -s ../../media $(pub)/media
 
 # Clean up all the things
 .PHONY: clean
@@ -60,5 +59,4 @@ clean:
 # ######## NOTES #########
 # * How to do index files now, with linking?
 # * RSS feed
-# * Automatic date? 
 
