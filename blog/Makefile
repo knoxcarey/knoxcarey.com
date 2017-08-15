@@ -27,16 +27,16 @@ pubdir:
 
 # Build the post HTML by applying theme, interpolating variables, etc.
 .PRECIOUS: staging/posts/%.post.html
-staging/posts/%.post.html: posts/published/%.md config/blog themes/current/post_header.html \
+staging/posts/%.post.html: posts/published/%.md config themes/current/post_header.html \
 			   %.body.html themes/current/post_footer.html | staging
 	$(eval pubdate = $(shell stat -t "%e %B %Y" -f "%Sc" $<))
 	$(eval perma = $(patsubst %.post.html, %.html, $(@F)))
 	$(awk) -f templar.awk -v 'date=$(pubdate)' -v 'permalink=$(perma)' $^ > $@
 
 # Create a standalone page
-%.header.html: config/blog posts/published/%.md themes/current/postpage_header.html
+%.header.html: config posts/published/%.md themes/current/postpage_header.html
 	$(awk) -f templar.awk $^ > $@
-%.footer.html: config/blog posts/published/%.md themes/current/postpage_footer.html
+%.footer.html: config posts/published/%.md themes/current/postpage_footer.html
 	$(awk) -f templar.awk $^ > $@
 .PRECIOUS: staging/pages/%.html
 staging/pages/%.html: %.header.html staging/posts/%.post.html %.footer.html | staging
