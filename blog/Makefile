@@ -31,13 +31,13 @@ staging/posts/%.post.html: posts/published/%.md config/blog themes/current/post_
 			   %.body.html themes/current/post_footer.html | staging
 	$(eval pubdate = $(shell stat -t "%e %B %Y" -f "%Sc" $<))
 	$(eval perma = $(patsubst %.post.html, %.html, $(@F)))
-	$(awk) -f code/meta.awk -v 'date=$(pubdate)' -v 'permalink=$(perma)' $^ > $@
+	$(awk) -f templar.awk -v 'date=$(pubdate)' -v 'permalink=$(perma)' $^ > $@
 
 # Create a standalone page
 %.header.html: config/blog posts/published/%.md themes/current/postpage_header.html
-	$(awk) -f code/meta.awk $^ > $@
+	$(awk) -f templar.awk $^ > $@
 %.footer.html: config/blog posts/published/%.md themes/current/postpage_footer.html
-	$(awk) -f code/meta.awk $^ > $@
+	$(awk) -f templar.awk $^ > $@
 .PRECIOUS: staging/pages/%.html
 staging/pages/%.html: %.header.html staging/posts/%.post.html %.footer.html | staging
 	cat $^ > $@
