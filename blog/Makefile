@@ -8,8 +8,8 @@ awk = /usr/local/bin/gawk
 pub = publish/axiomatic
 
 # Posts to publish
-posts = $(wildcard posts/publish/*.md)
-pages = $(patsubst posts/publish/%.md, %.html, $(posts))
+posts = $(wildcard posts/published/*.md)
+pages = $(patsubst posts/published/%.md, %.html, $(posts))
 
 # Make staging directory for storing built products
 staging:
@@ -25,7 +25,7 @@ pubdir:
 
 # Build the post HTML by applying theme, interpolating variables, etc.
 .PRECIOUS: staging/posts/%.post.html
-staging/posts/%.post.html: posts/publish/%.md config/blog themes/current/post_header.html \
+staging/posts/%.post.html: posts/published/%.md config/blog themes/current/post_header.html \
 			   %.body.html themes/current/post_footer.html | staging
 	$(eval pubdate = $(shell stat -t "%e %B %Y" -f "%Sc" $<))
 	$(eval perma = $(patsubst %.post.html, %.html, $(@F)))
