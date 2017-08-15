@@ -18,6 +18,8 @@ staging:
 # Make publication directory
 pubdir:
 	mkdir -p $(pub)
+	ln -nfs ../../themes/current $(pub)/theme
+	ln -nfs ../../media $(pub)/media
 
 # Convert multimarkdown files to bare HTML snippets
 %.body.html: posts/published/%.md
@@ -42,12 +44,10 @@ staging/pages/%.html: %.header.html staging/posts/%.post.html %.footer.html | st
 
 # Rule to publish staged files
 %.html: staging/pages/%.html | pubdir
-	ln -f -s ../../$< $(pub)/$@
+	ln -fs ../../$< $(pub)/$@
 
 # Publish blog
 publish: $(pages) | pubdir
-	ln -f -s ../../themes/current $(pub)/theme
-	ln -f -s ../../media $(pub)/media
 
 # Clean up all the things
 .PHONY: clean
