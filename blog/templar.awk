@@ -25,9 +25,9 @@
 # The title of the post is "My Awesome Post" and the author is knox
 #
 # Invoke the command line this:
-#   gawk -f meta.awk config post.md template.html
+#   gawk -f templar.awk config post.md template.html
 #
-# Where meta.awk is this file, config is a blog-wide set of key-value
+# Where templar.awk is this file, config is a blog-wide set of key-value
 # pairs, post.md is a blog post with key/value metadata at the top,
 # and template.html is the template file with metadata tags to be
 # filled in. 
@@ -54,7 +54,9 @@ BEGIN {
   IGNORECASE = 1                              # Match case-insensitive
   kv["{{updated}}"] = strftime("%e %B %Y")    # Update timestamp
   kv["{{date}}"] = date                       # Date passed in on cmd line
-  kv["{{permalink}}"] = permalink             # Permalink passed in
+  kv["{{permalink}}"] = permalink             # Permalink
+  kv["{{seq}}"] = seq                         # Sequence number (for indices)
+  kv["{{nseq}}"] = nseq                       # Total index count
 }
 
 # Extract metadata from first two files; stop at first whitespace-only line

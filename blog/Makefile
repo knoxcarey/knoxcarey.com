@@ -58,9 +58,8 @@ ih.html: config themes/current/index_header.html
 .INTERMEDIATE: if.html	
 if.html: config themes/current/index_footer.html
 	$(awk) -f templar.awk config $^ > $@
-.PHONY: staging/indices
 staging/indices: ih.html if.html $(staged) | staging
-	$(parallel) -n $(ppi) $(awk) -f templar.awk config config ih.html {} if.html '>' staging/indices/index{#}.html ::: $(staged)
+	$(parallel) --plus -n $(ppi) $(awk) -f templar.awk -v seq={#} -v nseq={##} config config ih.html {} if.html '>' staging/indices/index{#}.html ::: $(staged)
 
 # Rule to publish staged files
 %.html: staging/pages/%.html | pubdir
@@ -80,6 +79,6 @@ clean:
 
 
 # ######## NOTES #########
-# * How to do index files now, with linking?
+# * How to link index files?
 # * RSS feed
 
