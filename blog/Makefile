@@ -6,7 +6,7 @@ awk = /usr/local/bin/gawk
 parallel = /usr/local/bin/parallel
 
 # Publication directory
-pub = publish/axiomatic
+pub = sites/axiomatic
 
 # Reverse chronological list of links to published posts
 published = $(shell find posts/published/*.ts | sort -r)
@@ -22,10 +22,6 @@ staged = $(patsubst posts/published/%.md, staging/posts/%.post.html, $(posts))
 
 # Number of posts per index page
 ppi = 5
-
-all:
-	echo $(posts)
-
 
 # Make staging directory for storing built products
 staging:
@@ -47,11 +43,10 @@ pubdir:
 .PRECIOUS: staging/posts/%.post.html
 staging/posts/%.post.html: posts/published/%.md config themes/current/post_header.html \
 			   %.body.html themes/current/post_footer.html | staging
-	$(eval pubdate = $(shell stat -t "%e %B %Y" -f "%Sc" $<))
 	$(eval perma = $(patsubst %.post.html, %.html, $(@F)))
-	$(awk) -f templar.awk -v 'date=$(pubdate)' -v 'permalink=$(perma)' $^ > $@
+	$(awk) -f templar.awk -v 'permalink=$(perma)' $^ > $@
 
-# Create a standalone page
+# Create standalone pages
 %.ph.html: config posts/published/%.md themes/current/postpage_header.html
 	$(awk) -f templar.awk $^ > $@
 %.pf.html: config posts/published/%.md themes/current/postpage_footer.html
@@ -61,14 +56,10 @@ staging/pages/%.html: %.ph.html staging/posts/%.post.html %.pf.html | staging
 	cat $^ > $@
 
 # Create index pages
-.INTERMEDIATE: ih.html
-ih.html: config themes/current/index_header.html
-	$(awk) -f templar.awk config $^ > $@
-.INTERMEDIATE: if.html	
-if.html: config themes/current/index_footer.html
-	$(awk) -f templar.awk config $^ > $@
-staging/indices: ih.html if.html $(staged) | staging
-	$(parallel) --verbose --plus -n $(ppi)  $(awk) -f templar.awk -v "seq={#}" -v "nseq={##}" config config ih.html {} if.html '>' staging/indices/index{#}.html ::: $(staged)
+idxh = themes/current/index_header.html
+idxf = themes/current/index_footer.html
+staging/indices: $(idxh) $(idxf) $(staged) | staging
+	$(parallel) --plus -n $(ppi)  $(awk) -f templar.awk -v "seq={#}" -v "nseq={##}" config config $(idxh) {} $(idxf) '>' staging/indices/index{#}.html ::: $(staged)
 
 # Rule to publish staged files
 %.html: staging/pages/%.html | pubdir
@@ -84,7 +75,7 @@ publish: $(pages) staging/indices | pubdir
 .PHONY: clean
 clean:
 	rm -f staging/*/*
-	rm -rf publish
+	rm -rf $(pub)
 
 
 # ######## NOTES #########
