@@ -22,7 +22,9 @@ ppi = 5
 
 # Make staging directory for storing built products
 staging:
-	mkdir -p staging
+	mkdir -p staging/pages/
+	mkdir -p staging/posts/
+	mkdir -p staging/indices
 
 # Make publication directory
 pubdir:
@@ -59,7 +61,7 @@ ih.html: config themes/current/index_header.html
 if.html: config themes/current/index_footer.html
 	$(awk) -f templar.awk config $^ > $@
 staging/indices: ih.html if.html $(staged) | staging
-	$(parallel) --plus -n $(ppi) $(awk) -f templar.awk -v seq={#} -v nseq={##} config config ih.html {} if.html '>' staging/indices/index{#}.html ::: $(staged)
+	$(parallel) --verbose --plus -n $(ppi)  $(awk) -f templar.awk -v "seq={#}" -v "nseq={##}" config config ih.html {} if.html '>' staging/indices/index{#}.html ::: $(staged)
 
 # Rule to publish staged files
 %.html: staging/pages/%.html | pubdir

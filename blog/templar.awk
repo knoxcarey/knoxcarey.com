@@ -48,6 +48,9 @@
 # Trim whitespace from ends of string
 function trim(s) { gsub(/(^\s+|\s+$)/, "", s); return s }
 
+# Ignore non-existent inputs
+BEGINFILE { if (ERRNO != "") nextfile }
+
 # Initialize variables
 BEGIN {
   FS = ":[ \t]+"                              # Metadata split pattern
