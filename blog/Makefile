@@ -8,8 +8,11 @@ parallel = /usr/local/bin/parallel
 # Publication directory
 pub = publish/axiomatic
 
+# Reverse chronological list of links to published posts
+published = $(shell find posts/published/*.ts | sort -r)
+
 # Posts to publish, in reverse chronological order
-posts = $(shell ls -t1 posts/published/*.md)
+posts = $(foreach p, $(published), $(addprefix posts/published/, $(shell readlink $(p))))
 
 # Pages to generate from posts
 pages = $(patsubst posts/published/%.md, %.html, $(posts))
@@ -19,6 +22,10 @@ staged = $(patsubst posts/published/%.md, staging/posts/%.post.html, $(posts))
 
 # Number of posts per index page
 ppi = 5
+
+all:
+	echo $(posts)
+
 
 # Make staging directory for storing built products
 staging:
