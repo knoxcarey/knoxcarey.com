@@ -57,7 +57,7 @@ staging/pages/%.html: config posts/published/%.md $(pph) staging/posts/%.post.ht
 # Create index pages
 ih = themes/current/index_header.html
 if = themes/current/index_footer.html
-staging/indices: $(idxh) $(idxf) $(staged) | staging
+staging/indices: $(ih) $(if) $(staged) | staging
 	$(parallel) --plus -n $(ppi)  $(awk) -f templar.awk -v "seq={#}" -v "nseq={##}" config $(ih) {} $(if) '>' staging/indices/index{#}.html ::: $(staged)
 
 # Rule to publish staged files
