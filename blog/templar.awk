@@ -48,24 +48,26 @@
 # Trim whitespace from ends of string
 function trim(s) { gsub(/(^\s+|\s+$)/, "", s); return s }
 
-# Ignore non-existent inputs
-BEGINFILE { if (ERRNO != "") nextfile }
-
 # Initialize variables
 BEGIN {
   FS = ":[ \t]+"                              # Metadata split pattern
   IGNORECASE = 1                              # Match case-insensitive
-  kv["{{updated}}"] = strftime("%e %B %Y")    # Update timestamp
-  kv["{{date}}"] = date                       # Date passed in on cmd line
   kv["{{permalink}}"] = permalink             # Permalink
   kv["{{seq}}"] = seq                         # Sequence number (for indices)
   kv["{{nseq}}"] = nseq                       # Total index count
 }
 
-# Extract metadata from first two files; stop at first whitespace-only line
-ARGIND <= 2 && /^\w+\s*:\s+.*$/ { kv["{{" trim($1) "}}"] = trim($2) }
-ARGIND <= 2 && /^\s*$/          { nextfile }
+# Ignore non-existent inputs
+BEGINFILE { meta = 0; if (ERRNO != "") nextfile }
 
-# Make substitutions in subsequent files
-ARGIND > 2 && /{{/ { for (k in kv) gsub(k, kv[k]); gsub(/{{.*}}/, "") }
-ARGIND > 2 { print }
+# File starting with a key/value pair is metadata. Scan all key/values.
+/^\w+\s*:\s+.*$/ { if (FNR == 1) meta = 1; kv["{{" trim($1) "}}"] = trim($2) }
+
+# Stop scanning metadata files when we encounter a blank line
+meta && /^\s*$/  { nextfile }
+
+# Make substitutions when template braces appear
+/{{/ { for (k in kv) gsub(k, kv[k]); gsub(/{{.*}}/, "") }
+
+# Print out all non-metadata lines
+!meta { print }

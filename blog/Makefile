@@ -40,26 +40,25 @@ pubdir:
 	$(mmd) -s --nosmart $< > $@
 
 # Build the post HTML by applying theme, interpolating variables, etc.
+ph = themes/current/post_header.html
+pf = themes/current/post_footer.html
 .PRECIOUS: staging/posts/%.post.html
-staging/posts/%.post.html: posts/published/%.md config themes/current/post_header.html \
-			   %.body.html themes/current/post_footer.html | staging
+staging/posts/%.post.html: posts/published/%.md config $(ph) %.body.html $(pf) | staging
 	$(eval perma = $(patsubst %.post.html, %.html, $(@F)))
 	$(awk) -f templar.awk -v 'permalink=$(perma)' $^ > $@
 
 # Create standalone pages
-%.ph.html: config posts/published/%.md themes/current/postpage_header.html
-	$(awk) -f templar.awk $^ > $@
-%.pf.html: config posts/published/%.md themes/current/postpage_footer.html
-	$(awk) -f templar.awk $^ > $@
+pph = themes/current/postpage_header.html
+ppf = themes/current/postpage_footer.html
 .PRECIOUS: staging/pages/%.html
-staging/pages/%.html: %.ph.html staging/posts/%.post.html %.pf.html | staging
-	cat $^ > $@
+staging/pages/%.html: config posts/published/%.md $(pph) staging/posts/%.post.html $(ppf) | staging
+	$(awk) -f templar.awk $^ > $@
 
 # Create index pages
-idxh = themes/current/index_header.html
-idxf = themes/current/index_footer.html
+ih = themes/current/index_header.html
+if = themes/current/index_footer.html
 staging/indices: $(idxh) $(idxf) $(staged) | staging
-	$(parallel) --plus -n $(ppi)  $(awk) -f templar.awk -v "seq={#}" -v "nseq={##}" config config $(idxh) {} $(idxf) '>' staging/indices/index{#}.html ::: $(staged)
+	$(parallel) --plus -n $(ppi)  $(awk) -f templar.awk -v "seq={#}" -v "nseq={##}" config $(ih) {} $(if) '>' staging/indices/index{#}.html ::: $(staged)
 
 # Rule to publish staged files
 %.html: staging/pages/%.html | pubdir
