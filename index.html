@@ -8,13 +8,13 @@
     <script type="text/javascript">
       function getPixels(t){var e=document.createElement("canvas"),n=e.getContext("2d");return e.width=t.width,e.height=t.height,n.drawImage(t,0,0),n.getImageData(0,0,t.width,t.height).data}function renderAsText(t,e,n,i,r,a,h,g){var c=e.getContext("2d");c.font=n;var d=e.width=r*h;e.height=a*g;for(var o=0,f=0,l=0;o<t.length;f+=h)f>=d&&(l+=g,f=0),c.fillStyle=["rgba(",t[o++],",",t[o++],",",t[o++],",",t[o++],")"].join(""),c.fillText(i,f,l)}function imageToText(t,e,n,i,r,a){renderAsText(getPixels(t),e,n,i,t.width,t.height,r,a)}function contact(){var t=cc("`cdm5`cdmXVgZn#Xdb",11);return t}function cc(t,e){var n="";for(i=0;i<t.length;i++)n+=String.fromCharCode(t.charCodeAt(i)+e);return n}
     </script>
-<!--    <script defer type="text/javascript" src="terminal.js"></script> -->
+    <!--    <script defer type="text/javascript" src="terminal.js"></script> -->
     <style type="text/css">
       body {background-color: black; color: green; font-family: "Courier"; font-weight: bold;}
-      .centering {text-align: center;}
+      .centering {text-align: center; margin-top:1rem; margin-bottom:1rem;}
       .centering .centered {display: inline-block; text-align: left;}
-      #qotd {text-align: center;}
-      #terminal {position: relative; width: 80ch; height: 28em; margin-left: auto; margin-right: auto; text-align: left; overflow: hidden;}
+      /* qotd {text-align: center;} */
+      /* terminal {position: relative; width: 80ch; height: 28em; margin-left: auto; margin-right: auto; text-align: left; overflow: hidden;} */
       .cursor {color: black; background-color: green;}
       a {color: inherit;}
     </style>
@@ -57,6 +57,20 @@ o888o  o888o o888o o888o `Y8bod8P' o88'   888o       `Y8bood8P'  `Y888""8o d888b
 	<a href="https://knoxcarey.com/cv.html">Curriculum Vitae</a>
       </div>
     </div>
+
+    <div class="centering">
+      <div class="centered">
+	<a href="https://knoxcarey.com/geo/robinson.html">Bad Guys</a>
+      </div>
+    </div>
+
+    <div class="centering">
+      <div class="centered">
+	(c) Knox Carey, est. 1724040
+      </div>
+    </div>
+
+
 
     <!--
     <pre id="terminal">

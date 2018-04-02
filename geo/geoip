@@ -1,0 +1,26 @@
+#! /bin/sh
+
+# Tools
+CAT="/bin/cat"
+PARALLEL="/usr/local/bin/parallel"
+CURL="/usr/local/bin/curl"
+JQ="/usr/local/bin/jq"
+MD5="/bin/md5"
+
+# Directories + files
+DIR="/var/www/htdocs/knoxcarey.com/geo"
+SSHBAN="/etc/pf/sshban"
+
+# Check for updates
+SSHSUM=`$MD5 -q $SSHBAN`
+GEOSUM=`$CAT $DIR/md5sum`
+
+if [ $SSHSUM != $GEOSUM ]
+then
+    # Fetch geographic info
+    $PARALLEL $CURL -s ipinfo.io/{} ::: $(cat $SSHBAN) | $JQ -s . - > $DIR/sshban
+
+    # Remember state
+    $MD5 -q $SSHBAN > $DIR/md5sum
+fi
+

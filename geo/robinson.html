@@ -1,0 +1,118 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script src="robinson.js"></script>
+    <style>
+      body {background-color: black; color: green; font-family:
+      "Courier"; font-weight: bold; line-height: 1.05;}
+      #main {width: 1024px;}
+      .centering {margin-left: auto; margin-right: auto;}
+      .centering .centered {display: inline-block; text-align: left;}
+      a {color: inherit;}
+      h1 {font-size: 4rem; text-align: center;}
+      h2 {font-size: 2rem; text-align: center; margin-top: 2em;}
+      .text {font-size: 1.2rem; width: 75%; margin: 2.5em auto;}
+      blockquote {padding: 1em 0; font-size: 1.1rem;}
+      pre {border-top: 1px solid; border-bottom: 1px solid;
+      padding: 1em 0; font-size: 1.1rem;}
+    </style>
+
+  </head>
+
+  <body>
+    <div id="main" class="centering">
+      <h1>COME AT ME BRO</h1>
+
+      <canvas id="canvas">
+	<img id="map" onload="draw(this);" src="map2.png" />
+      </canvas>
+
+      <h2>What is this Thing?</h2>
+      <div class="text">
+	<p>
+	  The map above shows the locations of servers that have tried
+	  to brute force my network, demonstrating conclusively that
+	  this modest site is beloved the world over. 
+	  Entrance into this
+	  exclusive club can only be obtained by attempting to ssh
+	  into my network more than five times in a ten-second period.
+	  My personal best is once in a span of about a minute. Keep
+	  trying kids, you'll get there!
+	</p>
+
+	<p>
+	  My firewall captures offending IP address and places them on a
+	  blocklist, which I periodically convert to geographic
+	  information using the
+	  excellent <a href="https://ipinfo.io">ipinfo.io</a>. The
+	  JSON returned from that service looks like this:
+	</p>
+
+	<pre>
+    {
+      "ip": "103.89.88.95",
+      "city": "Hanoi",
+      "region": "Thanh Pho Ha Noi",
+      "country": "VN",
+      "loc": "21.0333,105.8500",
+      "org": "AS135905 VIETNAM POSTS AND TELECOMMUNICATIONS GROUP"
+    }</pre>
+
+	<p>
+	  I then draw dots on the map above using the loc fields for
+	  each server. 
+	</p>
+
+      </div>
+
+      <h2>About the Map</h2>
+      <div class="text">
+	<p>
+	  The map is
+	  a <a href="https://en.wikipedia.org/wiki/Robinson_projection">Robinson
+	  projection</a> of the globe, designed by Dr Arthur Robinson to
+	  produce an aesthetically pleasing representation.
+	</p>
+
+	<blockquote>
+	  "I decided to go about it backwards," Dr. Robinson said. "I
+	  started with a kind of artistic approach. I visualized the
+	  best-looking shapes and sizes. I worked with the variables
+	  until it got to the point where, if I changed one of them,
+	  it didn't get any better. Then I figured out the
+	  mathematical formula to produce that effect. Most mapmakers
+	  start with the
+	  mathematics."<br/><br/>
+	  [<a href="https://www.nytimes.com/1988/10/25/science/the-impossible-quest-for-the-perfect-map.html">New
+	  York Times, 25 Oct 1988</a>]
+	</blockquote>
+	
+	<p>
+	  Robinson <a href="http://www.radicalcartography.net/projections/robinsontable.html">tabulated</a>
+	  the lengths of each parallel and its distance to the equator
+	  in latitude increments of 5&deg;, with the expectation that
+	  users would interpolate.
+	</p>
+
+	<p>That's what I have done to plot the server locations
+	  above, using fourth-order polynomials fit with the
+	  least squares method to Robinson's tabulated values.
+	  To compute the length of a parallel given the latitude, use
+	  the following polynomial coefficients:</p>
+	
+	<pre>[7.8334e-09, -1.3434e-06, 5.0267e-06, -5.2218e-04, 1.0007]</pre>
+
+	<p>The distance of that parallel from the equator is given
+	  by another polynomial with these coefficients:</p>
+
+	<pre>[-4.1885e-09, 4.7268e-07, -1.8389e-05, 6.5366e-03, -5.7514e-04]</pre>
+
+	<p>Lines of longitude are equally spaced along the
+	  parallels. For more implementation details, see the page source.
+	</p>
+
+      </div>
+
+    </div>
+  </body>
+</html>
