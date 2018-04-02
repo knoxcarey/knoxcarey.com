@@ -6,10 +6,13 @@ awk = /usr/local/bin/gawk
 parallel = /usr/local/bin/parallel
 
 # Publication directory
-pub = publish/axiomatic
+pub = sites/axiomatic
+
+# Reverse chronological list of links to published posts
+published = $(shell find posts/published/*.ts | sort -r)
 
 # Posts to publish, in reverse chronological order
-posts = $(shell ls -t1 posts/published/*.md)
+posts = $(foreach p, $(published), $(addprefix posts/published/, $(shell readlink $(p))))
 
 # Pages to generate from posts
 pages = $(patsubst posts/published/%.md, %.html, $(posts))
@@ -22,7 +25,9 @@ ppi = 5
 
 # Make staging directory for storing built products
 staging:
-	mkdir -p staging
+	mkdir -p staging/pages/
+	mkdir -p staging/posts/
+	mkdir -p staging/indices
 
 # Make publication directory
 pubdir:
@@ -35,31 +40,25 @@ pubdir:
 	$(mmd) -s --nosmart $< > $@
 
 # Build the post HTML by applying theme, interpolating variables, etc.
+ph = themes/current/post_header.html
+pf = themes/current/post_footer.html
 .PRECIOUS: staging/posts/%.post.html
-staging/posts/%.post.html: posts/published/%.md config themes/current/post_header.html \
-			   %.body.html themes/current/post_footer.html | staging
-	$(eval pubdate = $(shell stat -t "%e %B %Y" -f "%Sc" $<))
+staging/posts/%.post.html: posts/published/%.md config $(ph) %.body.html $(pf) | staging
 	$(eval perma = $(patsubst %.post.html, %.html, $(@F)))
-	$(awk) -f templar.awk -v 'date=$(pubdate)' -v 'permalink=$(perma)' $^ > $@
+	$(awk) -f templar.awk -v 'permalink=$(perma)' $^ > $@
 
-# Create a standalone page
-%.ph.html: config posts/published/%.md themes/current/postpage_header.html
-	$(awk) -f templar.awk $^ > $@
-%.pf.html: config posts/published/%.md themes/current/postpage_footer.html
-	$(awk) -f templar.awk $^ > $@
+# Create standalone pages
+pph = themes/current/postpage_header.html
+ppf = themes/current/postpage_footer.html
 .PRECIOUS: staging/pages/%.html
-staging/pages/%.html: %.ph.html staging/posts/%.post.html %.pf.html | staging
-	cat $^ > $@
+staging/pages/%.html: config posts/published/%.md $(pph) staging/posts/%.post.html $(ppf) | staging
+	$(awk) -f templar.awk $^ > $@
 
 # Create index pages
-.INTERMEDIATE: ih.html
-ih.html: config themes/current/index_header.html
-	$(awk) -f templar.awk config $^ > $@
-.INTERMEDIATE: if.html	
-if.html: config themes/current/index_footer.html
-	$(awk) -f templar.awk config $^ > $@
-staging/indices: ih.html if.html $(staged) | staging
-	$(parallel) --plus -n $(ppi) $(awk) -f templar.awk -v seq={#} -v nseq={##} config config ih.html {} if.html '>' staging/indices/index{#}.html ::: $(staged)
+ih = themes/current/index_header.html
+if = themes/current/index_footer.html
+staging/indices: $(ih) $(if) $(staged) | staging
+	$(parallel) --plus -n $(ppi)  $(awk) -f templar.awk -v "seq={#}" -v "nseq={##}" config $(ih) {} $(if) '>' staging/indices/index{#}.html ::: $(staged)
 
 # Rule to publish staged files
 %.html: staging/pages/%.html | pubdir
@@ -75,7 +74,7 @@ publish: $(pages) staging/indices | pubdir
 .PHONY: clean
 clean:
 	rm -f staging/*/*
-	rm -rf publish
+	rm -rf $(pub)
 
 
 # ######## NOTES #########
