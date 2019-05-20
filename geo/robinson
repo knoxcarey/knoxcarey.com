@@ -30,16 +30,16 @@
       <h2>What is this Thing?</h2>
       <div class="text">
 	<p>
-	  The map above shows the locations of servers that have tried
-	  to brute force my network, demonstrating conclusively that
-	  this modest site is beloved the world over. 
-	  Entrance into this
-	  exclusive club can only be obtained by attempting to ssh
-	  into my network more than five times in a ten-second period.
-	  My personal best is once in a span of about a minute. Keep
-	  trying kids, you'll get there!
+	  The map above shows (in red) the locations of servers that
+	  have tried to brute force my network, demonstrating
+	  conclusively that this modest site is beloved the world
+	  over. Entrance into this exclusive club can only be obtained
+	  by attempting to ssh into my network more than five times in
+	  a ten-second period. My personal best is once in a span of
+	  about a minute. Keep trying kids, you'll get there! The blue
+	  dots represent overly-aggressive web robots.
 	</p>
-
+	
 	<p>
 	  My firewall captures offending IP address and places them on a
 	  blocklist, which I periodically convert to geographic

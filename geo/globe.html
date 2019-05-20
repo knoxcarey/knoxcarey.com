@@ -64,7 +64,6 @@ var line = svg.append("path")
 
 
 d3.json("data/110m.json", function(error, world) {
-
   svg.append("path")
       .datum(topojson.feature(world, world.objects.land))
       .attr("id", "land")
@@ -96,9 +95,8 @@ d3.json("data/110m.json", function(error, world) {
 
 
 d3.json("data/badguys.geo", function(error, points) {
-console.log(points.geometry.coordinates);
-
-svg.append("points").datum(points.geometry.coordinates).attr("d", path.pointRadius(5)).attr("d", path);
+    console.log(points.geometry.coordinates);
+    svg.append("points").datum(points.geometry.coordinates).attr("d", path.pointRadius(5)).attr("d", path);
 });
 
 </script>

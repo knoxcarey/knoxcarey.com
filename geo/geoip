@@ -9,18 +9,29 @@ MD5="/bin/md5"
 
 # Directories + files
 DIR="/var/www/htdocs/knoxcarey.com/geo"
-SSHBAN="/etc/pf/sshban"
+SSHBAN="/var/block/sshban"
+WEBBAN="/var/block/webban"
 
 # Check for updates
 SSHSUM=`$MD5 -q $SSHBAN`
-GEOSUM=`$CAT $DIR/md5sum`
+WEBSUM=`$MD5 -q $WEBBAN`
+GEOSSHSUM=`$CAT $DIR/sshmd5sum`
+GEOWEBSUM=`$CAT $DIR/webmd5sum`
 
-if [ $SSHSUM != $GEOSUM ]
+if [ $SSHSUM != $GEOSSHSUM ]
 then
     # Fetch geographic info
     $PARALLEL $CURL -s ipinfo.io/{} ::: $(cat $SSHBAN) | $JQ -s . - > $DIR/sshban
 
     # Remember state
-    $MD5 -q $SSHBAN > $DIR/md5sum
+    $MD5 -q $SSHBAN > $DIR/sshmd5sum
 fi
 
+if [ $WEBSUM != $GEOWEBSUM ]
+then
+    # Fetch geographic info
+    $PARALLEL $CURL -s ipinfo.io/{} ::: $(cat $WEBBAN) | $JQ -s . - > $DIR/webban
+
+    # Remember state
+    $MD5 -q $WEBBAN > $DIR/webmd5sum
+fi

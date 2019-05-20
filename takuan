@@ -1,0 +1,76 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <style>
+      body {background-color: black; color: green; font-family:
+      "Courier"; font-weight: bold; line-height: 1.05;}
+      #main {width: 1024px;}
+      .centering {margin-left: auto; margin-right: auto;}
+      .centering .centered {display: inline-block; text-align: left;}
+      a {color: inherit;}
+      h1 {font-size: 4rem; text-align: center;}
+      h2 {font-size: 2rem; text-align: center; margin-top: 2em;}
+      .text {font-size: 1.2rem; width: 75%; margin: 2.5em auto;}
+      blockquote {padding: 1em 0; font-size: 1.1rem;}
+      pre {border-top: 1px solid; border-bottom: 1px solid;
+      padding: 1em 0; font-size: 1.1rem;}
+    </style>
+
+  </head>
+
+  <body>
+    <div id="main" class="centering">
+      <h1>Takuan's Letter</h1>
+      <div class="text" style="text-align: center;">
+	<p>Quoted in <i>Zen and Japanese Culture</i> by D.T. Suzuki</p>
+      </div>
+      
+      <h2>Affects Attendant on the Abiding<br/>Stage of Ignorance</h2>
+      <div class="text">
+	<p>
+	  In Buddhist training, we speak of fifty-two stages, of which
+	  one is a stage where the mind attaches itself to any object
+	  it encounters. This attaching is known as <i>tomaru</i>,
+	  "stopping" or "abiding." The mind stops with one object
+	  instead of flowing from one object to another, as the mind
+	  acts when it follows its own nature.
+	</p>
+	
+	<p>
+	  In the case of swordsmanship, for instance, when the
+	  opponent tries to strike you, your eyes at once catch the
+	  movement of his sword and you may strive to follow it. But
+	  as soon as this takes place, you cease to be master of
+	  yourself and you are sure to be beaten. This is called
+	  "stopping."
+	</p>
+
+	<p>
+	  No doubt you see the sword about to strike you, but do not
+	  let your mind stop there. Have no intention to
+	  counterattack him in response to his threatening move,
+	  cherish no calculating thoughts whatever. You simply
+	  perceive the opponent's move, you do not allow your mind to
+	  stop with it, you move on just as you are toward the
+	  opponent and make use of his attack by turning it on to
+	  himself. Then his sword meant to kill you will become your
+	  own and the weapon will fall on the opponent himself.
+	</p>
+
+	<p>
+	  This is "no sword" in your terminology. As soon as the mind
+	  stops with an object of whatever nature &mdash; be it the
+	  opponent's sword or your own, the man himself bent on
+	  striking or the sword in his hand, the mode or the measure
+	  of the move &mdash; you cease to be master of yourself and
+	  are sure to fall victim to the enemy's sword. When you set
+	  yourself against him, your mind will be carried away by
+	  him. Therefore, do not even think of yourself. That is to
+	  say, the opposition of subject and object is to be
+	  transcended.
+	</p>
+	
+      </div>
+    </div>
+  </body>
+</html>

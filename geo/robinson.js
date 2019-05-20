@@ -38,7 +38,7 @@ function y(lat, lon, w, h) {
     return h/2 * (1 - Math.sign(lat) * 1.9716 * parallelHeight(lat));
 }
 
-function showLocations(ctx) {
+function showLocations(ctx, color) {
     return function() {
 	locations = JSON.parse(this.responseText);
 	for (p in locations) {
@@ -49,7 +49,7 @@ function showLocations(ctx) {
 		xp = x(lat, lon, mapWidth, mapHeight);
 		yp = y(lat, lon, mapWidth, mapHeight);
 		
-		ctx.fillStyle = "#FF1C0A";
+		ctx.fillStyle = color;
 		ctx.beginPath();
 		ctx.arc(xp, yp, 5, 0, Math.PI*2, true); 
 		ctx.closePath();
@@ -71,7 +71,12 @@ function draw(e) {
     ctx.drawImage(background, 0, 0, mapWidth, mapHeight);
 
     var req = new XMLHttpRequest();
-    req.addEventListener("load", showLocations(ctx));
+    req.addEventListener("load", showLocations(ctx, "#FF1C0A"));
     req.open("GET", "sshban");
     req.send();
+
+    var req = new XMLHttpRequest();
+    req.addEventListener("load", showLocations(ctx, "#0A1CFF"));
+    req.open("GET", "webban");
+    req.send();    
 }
