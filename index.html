@@ -8,7 +8,6 @@
     <script type="text/javascript">
       function getPixels(t){var e=document.createElement("canvas"),n=e.getContext("2d");return e.width=t.width,e.height=t.height,n.drawImage(t,0,0),n.getImageData(0,0,t.width,t.height).data}function renderAsText(t,e,n,i,r,a,h,g){var c=e.getContext("2d");c.font=n;var d=e.width=r*h;e.height=a*g;for(var o=0,f=0,l=0;o<t.length;f+=h)f>=d&&(l+=g,f=0),c.fillStyle=["rgba(",t[o++],",",t[o++],",",t[o++],",",t[o++],")"].join(""),c.fillText(i,f,l)}function imageToText(t,e,n,i,r,a){renderAsText(getPixels(t),e,n,i,t.width,t.height,r,a)}function contact(){var t=cc("`cdm5`cdmXVgZn#Xdb",11);return t}function cc(t,e){var n="";for(i=0;i<t.length;i++)n+=String.fromCharCode(t.charCodeAt(i)+e);return n}
     </script>
-    <!--    <script defer type="text/javascript" src="terminal.js"></script> -->
     <style type="text/css">
       body {background-color: black; color: green; font-family: "Courier"; font-weight: bold; display: flex; flex-direction: column; align-items: center; flex-wrap: wrap;}
       body div {padding: 1rem 0;}
@@ -50,7 +49,7 @@
 
       <div class="tweet">
 	<a href="https://twitter.com/realDonaldTrump/status/141604554855825408">
-	  <img class="centered" src="TrumpIran.png" width="512"/>
+	  <img class="centered" src="images/TrumpIran.png" width="512"/>
 	</a>
       </div>
 
