@@ -43,23 +43,3 @@ function imageToText(image, canvas, font, text, dx, dy) {
 }
 ```
 
-## Contact info
-
-I didn't want to put my email address in the page in the clear, so I
-obfuscated it with a Caesar cipher. The follow code (which, again, is
-in a minified form in the `<head>`) displays my email address:
-
-```javascript
-function contact() {
-  var contactstr = cc("`cdm5`cdmXVgZn#Xdb", 11) 
-  return contactstr;
-}
-
-function cc(s, off) {
-  var rot = "";
-  for(var i=0; i < s.length; i++) {
-    rot += String.fromCharCode((s.charCodeAt(i) + off));
-  }
-  return rot;
-}
-```
