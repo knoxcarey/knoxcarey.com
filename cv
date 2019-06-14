@@ -741,20 +741,41 @@
       <div class="divider">Selected Publications</div>
 
       <div class="publication">
-	<i>Beacon: A Protocol for Federated Discovery and Sharing of
-	Genomic Data</i>, with Marc Fiume et al. In review.
+	<i>Federated Discovery and Sharing of Genomic Data using Beacons</i>, with 
+	Marc Fiume et al. Nature Biotechnology, 2019 Mar; 37(3):220-224.
+	<a href="https://www.nature.com/articles/s41587-019-0046-x">https://www.nature.com/articles/s41587-019-0046-x</a>
       </div>
 
       <div class="publication">
+	<i>Registered Access: Authorizing Data Access</i>, with Stephanie Dyke et al.
+	European Journal of Human Genetics. 2018 Dec; 26(12):1721-1731.
+	<a href="https://www.nature.com/articles/s41431-018-0219-y">https://www.nature.com/articles/s41431-018-0219-y</a>
+      </div>
+
+      <div class="publication">
+	<i>Simplifying Research Access to Genomics and Health Data with Library Cards</i>, with Moran Cabili et al.
+	Scientific Data. 2018 Mar 14; 5:180039.
+	<a href="https://www.nature.com/articles/sdata201839">https://www.nature.com/articles/sdata201839</a>
+      </div>
+
+      <div class="publication">
+	<i>A Community Effort to Protect Genomic Data Sharing, Collaboration and Outsourcing</i>, with Shuang Wang et al.
+	NPJ Genom Med. 2017 Oct 27; 2:33. 
+	<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5677972/">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5677972/</a>
+      </div>
+      
+      <div class="publication">
 	<i>Addressing Beacon Re-Identification Attacks: Quantification
 	and Mitigation of Privacy Risks</i>, with Jean Louis Raisaro et
-	al. Journal of the American Medical Informatics Association, 20 February 2017. DOI: <a href="DOI: https://doi.org/10.1093/jamia/ocw167">https://doi.org/10.1093/jamia/ocw167</a>. <a href="https://academic.oup.com/jamia/article/3038412/Addressing">https://academic.oup.com/jamia/article/3038412/Addressing</a>.  
+	al. Journal of the American Medical Informatics Association, 20 February 2017.
+	<a href="https://academic.oup.com/jamia/article/3038412/Addressing">https://academic.oup.com/jamia/article/3038412/Addressing</a>
       </div>
 	
       <div class="publication">
 	<i>The Matchmaker Exchange: a platform for rare disease gene
 	discovery</i>, with A. Philippakis et al., Human Mutation, October
-	2015, 36(10):915-21. <a href="https://www.ncbi.nlm.nih.gov/pubmed/26295439">https://www.ncbi.nlm.nih.gov/pubmed/26295439</a>.
+	2015, 36(10):915-21.
+	<a href="https://onlinelibrary.wiley.com/doi/full/10.1002/humu.22858">https://onlinelibrary.wiley.com/doi/full/10.1002/humu.22858</a>
       </div>
 
       <div class="publication">
